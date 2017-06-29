@@ -44,7 +44,7 @@ class App extends Component {
                 </div>
                 <Footer contact="Gmail: codpoe.me@gmail.com"></Footer>*/}
                 <div className="horizon-lines"></div>
-                <Letters letters="Hello"/>
+                <Letters letters="Hello React"/>
             </div>
         )
     }
