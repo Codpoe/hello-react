@@ -1,0 +1,9 @@
+.main {
+    order: 1;
+    flex: 1;
+    padding: 30px;
+    p {
+        font-size: 14px;
+        color: #555;
+    }
+}

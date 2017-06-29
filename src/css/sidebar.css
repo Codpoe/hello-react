@@ -1,0 +1,26 @@
+.sidebar {
+    width: 300px;
+    height: 100%;
+    order: 0;
+    box-shadow: 1px 0 2px 0 rgba(0,0,0,.2);
+    ul {
+        width: 100%;
+        list-style-type: none;
+        li {
+
+        }
+    }
+    a {
+        display: block;
+        padding: 10px;
+        color: #888;
+        font-size: 14px;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .link--active {
+        color: red;
+    }
+}
