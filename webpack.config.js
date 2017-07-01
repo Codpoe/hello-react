@@ -44,6 +44,8 @@ module.exports = {
         })
     ],
     devServer: {
+        host: '0.0.0.0',
+        public: '172.20.30.182:8080',
         hot: true,
         historyApiFallback: true,
         noInfo: true

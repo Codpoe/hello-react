@@ -10,33 +10,35 @@ class Fullpage extends Component {
         this.state = {
             currentIndex: 0
         };
+        this.delta = 0;
+        this.pageSize = props.children && props.children.length;
+        this.isScrolling = false;
         this.onWheel = this.onWheel.bind(this);
+        this.onTouchStart = this.onTouchStart.bind(this);
+        this.onTouchMove = this.onTouchMove.bind(this);
+        this.onTouchEnd = this.onTouchEnd.bind(this);
         this.onIndicatorClick = this.onIndicatorClick.bind(this);
     }
 
     componentDidMount() {
-        const pageSize = this.props.children && this.props.children.length;
-        let delta = 0;
-        let isScrolling = false;
-
         window.addEventListener('wheel', (ev) => {
-            delta = this.calcDelta(ev);
-            if (delta < -this.props.sensitivity && !isScrolling && this.state.currentIndex < pageSize - 1) {
+            this.delta = this.calcDelta(ev);
+            if (this.delta < -this.props.sensitivity && !this.isScrolling && this.state.currentIndex < this.pageSize - 1) {
                 this.setState((prevState, props) => ({
                     currentIndex: ++prevState.currentIndex
                 }));
-                isScrolling = true;
+                this.isScrolling = true;
                 setTimeout(() => {
-                    isScrolling = false;
+                    this.isScrolling = false;
                 }, this.props.duration);
             }
-            if (delta > this.props.sensitivity && !isScrolling && this.state.currentIndex > 0) {
+            if (this.delta > this.props.sensitivity && !this.isScrolling && this.state.currentIndex > 0) {
                 this.setState((prevState, props) => ({
                     currentIndex: --prevState.currentIndex
                 }));
-                isScrolling = true;
+                this.isScrolling = true;
                 setTimeout(() => {
-                    isScrolling = false;
+                    this.isScrolling = false;
                 }, this.props.duration);
             }
         });
@@ -44,6 +46,37 @@ class Fullpage extends Component {
 
     onWheel(ev) {
         ev.preventDefault();
+    }
+
+    onTouchStart(ev) {
+        this.delta = ev.touches[0].clientY;
+        
+    }
+
+    onTouchMove(ev) {
+
+    }
+
+    onTouchEnd(ev) {
+        this.delta -= ev.changedTouches[0].clientY;
+        if (this.delta > 0 && !this.isScrolling && this.state.currentIndex < this.pageSize - 1) {
+            this.setState((prevState, props) => ({
+                currentIndex: ++prevState.currentIndex
+            }));
+            this.isScrolling = true;
+            setTimeout(() => {
+                this.isScrolling = false;
+            }, this.props.duration);
+        }
+        if (this.delta < 0 && !this.isScrolling && this.state.currentIndex > 0) {
+            this.setState((prevState, props) => ({
+                currentIndex: --prevState.currentIndex
+            }));
+            this.isScrolling = true;
+            setTimeout(() => {
+                this.isScrolling = false;
+            }, this.props.duration);
+        }
     }
 
     onIndicatorClick(index) {
@@ -68,7 +101,10 @@ class Fullpage extends Component {
                         transform: `translateY(${-this.state.currentIndex * 100}vh)`,
                         transition: `transform ${this.props.duration / 1000}s cubic-bezier(0.6, 0.5, 0.3, 1)`
                     }}
-                    onWheel={this.onWheel}>
+                    onWheel={this.onWheel}
+                    onTouchStart={this.onTouchStart}
+                    onTouchMove={this.onTouchMove}
+                    onTouchEnd={this.onTouchEnd}>
                     {this.props.children && this.props.children.map((child, index) => (
                         <li className="page" key={index}>{child}</li>
                     ))}
