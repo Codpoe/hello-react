@@ -15,8 +15,8 @@ class Fullpage extends Component {
         this.isScrolling = false;
         this.onWheel = this.onWheel.bind(this);
         this.onTouchStart = this.onTouchStart.bind(this);
-        this.onTouchMove = this.onTouchMove.bind(this);
         this.onTouchEnd = this.onTouchEnd.bind(this);
+        this.onFullpageTouchStart = this.onFullpageTouchStart.bind(this);
         this.onIndicatorClick = this.onIndicatorClick.bind(this);
     }
 
@@ -50,11 +50,6 @@ class Fullpage extends Component {
 
     onTouchStart(ev) {
         this.delta = ev.touches[0].clientY;
-        
-    }
-
-    onTouchMove(ev) {
-
     }
 
     onTouchEnd(ev) {
@@ -93,9 +88,16 @@ class Fullpage extends Component {
         }
     }
 
+    onFullpageTouchStart(ev) {
+        if (this.state.currentIndex !== 0) {
+            ev.preventDefault();
+        }    
+    }
+
     render() {
         return (
-            <div className="fullpage">
+            <div className="fullpage"
+                onTouchStart={this.onFullpageTouchStart}>
                 <ul className="wrapper"
                     style={{
                         transform: `translateY(${-this.state.currentIndex * 100}vh)`,
@@ -104,7 +106,9 @@ class Fullpage extends Component {
                     onWheel={this.onWheel}
                     onTouchStart={this.onTouchStart}
                     onTouchMove={this.onTouchMove}
-                    onTouchEnd={this.onTouchEnd}>
+                    onTouchEnd={this.onTouchEnd}
+                    onMouseDown={this.onMouseDown}
+                    onMouseUp={this.onMouseUp}>
                     {this.props.children && this.props.children.map((child, index) => (
                         <li className="page" key={index}>{child}</li>
                     ))}
