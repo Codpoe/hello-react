@@ -4,6 +4,7 @@ import Sidebar from './sidebar.js';
 import Main from './main.js';
 import Footer from './footer.js';
 import Letters from './letters.js';
+import Fullpage from './fullpage.js';
 
 import './css/app.css';
 
@@ -29,7 +30,6 @@ let links = [
 class App extends Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
@@ -44,7 +44,12 @@ class App extends Component {
                 </div>
                 <Footer contact="Gmail: codpoe.me@gmail.com"></Footer>*/}
                 <div className="horizon-lines"></div>
-                <Letters letters="Hello React"/>
+                {/*<Letters letters=""/>*/}
+                <Fullpage showIndicator orientation="horizontal">
+                    <div style={{width: `100%`, height: `100%`, background: `url('https://ws2.sinaimg.cn/large/006tNc79gy1fh4q4fdvsgj31kw11xx25.jpg')`}}></div>
+                    <div style={{width: `100%`, height: `100%`, background: `url('https://ws4.sinaimg.cn/large/006tNc79gy1fh4q4ch9pjj31kw0rch6d.jpg')`}}></div>
+                    <div style={{width: `100%`, height: `100%`, background: `url('https://ws2.sinaimg.cn/large/006tNc79gy1fh4q4fdvsgj31kw11xx25.jpg')`}}></div>
+                </Fullpage>
             </div>
         )
     }

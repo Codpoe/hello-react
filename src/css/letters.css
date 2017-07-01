@@ -1,8 +1,9 @@
 .letters {
-    font-size: 56px;
+    font-size: 100px;
+    font-weight: 300;
     color: #515151;
     .cursor {
-        animation: cursor-shine-anim 0.6s;
+        animation: cursor-shine-anim 0.8s;
         animation-iteration-count: infinite;
         animation-fill-mode: both;
     }
